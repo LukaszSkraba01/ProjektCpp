@@ -76,6 +76,49 @@ public:
         	return data_[0] * data_[4] * data_[8] + data_[1] * data_[5] * data_[6] + data_[2] * data_[3] * data_[7] - data_[2] * data_[4] * data_[6] - data_[1] * data_[3] * data_[8] - data_[0] * data_[5] * data_[7];
     	}
 	}
+	
+	//metoda obliczajaca stopien macierzy
+	int degree() const
+	{	
+    	int max_nonzero_rows = 0;
+    	for (int i = 0; i < rows_; i++)
+    	{
+        	bool row_is_zero = true;
+        	for (int j = 0; j < cols_; j++)
+        	{
+            	if ((*this)(i, j) != 0)
+            	{
+                	row_is_zero = false;
+                	break;
+            	}
+        	}
+        	if (!row_is_zero)
+        	{
+            	max_nonzero_rows++;
+        	}
+    	}
+
+    	int max_nonzero_cols = 0;
+    	for (int j = 0; j < cols_; j++)
+    	{
+        	bool col_is_zero = true;
+        	for (int i = 0; i < rows_; i++)
+        	{
+            	if ((*this)(i, j) != 0)
+            	{
+                	col_is_zero = false;
+                	break;
+            	}
+        	}
+        	if (!col_is_zero)
+        	{
+            	max_nonzero_cols++;
+        	}
+    	}
+	
+	    return std::max(max_nonzero_rows, max_nonzero_cols);
+	}
+	
 private:
     int rows_;
     int cols_;
@@ -116,6 +159,9 @@ int main()
     
     double det = m.determinant();
 	std::cout << "Wyznacznik macierzy wejsciowej: " << det << '\n';
+	
+	int degree = m.degree();
+	std::cout << "Stopien macierzy wejsciowej: " << degree << '\n';
 
     return 0;
 }
