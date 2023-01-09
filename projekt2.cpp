@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 class Matrix
 {
@@ -21,7 +22,7 @@ public:
         }
     }
 
-    // Nowa metoda dokonujaca transpozycji macierzy
+    //metoda dokonujaca transpozycji macierzy
     Matrix transpose() const
     {
         Matrix transposed(cols_, rows_);
@@ -37,7 +38,7 @@ public:
         return transposed;
     }
     
-    // Nowa metoda dokonujaca odwrócenia macierzy
+    //metoda dokonujaca odwrócenia macierzy
     Matrix reverse() const
     {
         Matrix reversed(rows_, cols_);
@@ -53,7 +54,7 @@ public:
         return reversed;
     }
     
-    //nowa metoda obliczajaca wyznacznik macierzy maksymalnie 3x3 za pomoca metody Algorytmu Laplace'a
+    //metoda obliczajaca wyznacznik macierzy maksymalnie 3x3 za pomoca metody Algorytmu Laplace'a
     double determinant() const
 	{
     	if (rows_ != cols_)
@@ -62,7 +63,7 @@ public:
         	return 0.0;
     	}
 
-    	// Algorytm Laplace'a
+    	//Algorytm Laplace'a
     	if (rows_ == 1)
     	{
   	    	return data_[0];
@@ -119,6 +120,26 @@ public:
 	    return std::max(max_nonzero_rows, max_nonzero_cols);
 	}
 	
+	//metoda obliczajaca dopelnienie algebraiczne elementow macierzy wejsciowej
+	Matrix algebraic_complement() const
+	{
+    	if (rows_ != cols_)
+    	{
+        	std::cout << "Macierz musi byc kwadratowa, aby obliczyc dopelnienie algebraiczne." << '\n';
+        	return Matrix(0, 0);
+    	}
+
+    	Matrix complement(rows_, cols_);
+    	for (int i = 0; i < rows_; i++)
+    	{
+        	for (int j = 0; j < cols_; j++)
+        	{
+            	complement(i, j) = std::pow(-1, i + j) * (*this)(i, j);
+        	}
+    	}
+    		return complement;
+	}
+	
 private:
     int rows_;
     int cols_;
@@ -162,6 +183,10 @@ int main()
 	
 	int degree = m.degree();
 	std::cout << "Stopien macierzy wejsciowej: " << degree << '\n';
+	
+	Matrix m_algebraic_complement = m.algebraic_complement();
+	std::cout << "Macierz dopelnien algebraicznych macierzy wejsciowej:" << '\n';
+	m_algebraic_complement.print();
 
     return 0;
 }
