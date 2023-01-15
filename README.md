@@ -1,4 +1,5 @@
 # ProjektCpp - P4 | Łukasz Skraba i Adrian Ruchała |
+# Macierze | Programowanie Zaawansowane | 2022/3|
 W podanym programie znajduje się konstruktor Matrix(int rows, int cols), który umożliwia utworzenie macierzy o podanych liczbie wierszy i kolumn. Konstruktor ten jest wywoływany w linii Matrix m(rows, cols), gdzie rows i cols to zmienne, które są wczytywane od użytkownika.
 
 Klasa Matrix pozwala na tworzenie obiektów przechowujących macierze. W podanym programie obiekt o nazwie m jest tworzony w linii Matrix m(rows, cols), gdzie rows i cols są zmiennymi, które są wczytywane od użytkownika. Obiekt ten przechowuje macierz o liczbie wierszy i kolumn określonej przez użytkownika.
