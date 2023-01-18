@@ -4,6 +4,7 @@
 #include <iomanip>
 #include<stdlib.h>
 #include<time.h>
+using namespace std;
 
 class Matrix
 {
@@ -19,9 +20,9 @@ public:
         {
             for (int j = 0; j < cols_; j++)
             {
-                std::cout << (*this)(i, j) << ' ';
+                cout << (*this)(i, j) << ' ';
             }
-            std::cout << '\n';
+            cout << '\n';
         }
     }
 
@@ -40,18 +41,18 @@ public:
 
         return transposed;
     }
-    
+
     //metoda dokonujaca obliczenia odwrotnej macierzy
     Matrix reverse() const
     {
         if (rows_ != cols_)
         {
-            std::cout<<"Nie ma odwrotnej macierzy bo macierz nie jest kwadratowa.\n";
+            cout<<"Nie ma odwrotnej macierzy bo macierz nie jest kwadratowa.\n";
         }
         double det = determinant();
         if (det == 0)
         {
-            std::cout<<"Nie ma odwrotnej macierzy bo wyznacznik rowny 0\n";
+            cout<<"Nie ma odwrotnej macierzy bo wyznacznik rowny 0\n";
         }
         Matrix adjoint(rows_,cols_);
         for (int i = 0; i < rows_; i++)
@@ -68,18 +69,18 @@ public:
                         sub_matrix(k,l) = (*this)(row,col);
                     }
                 }
-                adjoint(j,i) = std::pow(-1, i + j) * sub_matrix.determinant();
+                adjoint(j,i) = pow(-1, i + j) * sub_matrix.determinant();
             }
         }
         return adjoint * (1.0/det);
     }
-    
+
     //metoda obliczajaca wyznacznik macierzy maksymalnie 3x3 za pomoca metody Algorytmu Laplace'a
     double determinant() const
 	{
     if (rows_ != cols_)
     {
-        std::cout << "Macierz musi byc kwadratowa, aby obliczyc wyznacznik." << '\n';
+        cout << "Macierz musi byc kwadratowa, aby obliczyc wyznacznik." << '\n';
         return 0.0;
     }
 
@@ -116,10 +117,10 @@ public:
     }
     return det;
 	}
-	
+
 	//metoda obliczajaca stopien macierzy
 	int degree() const
-	{	
+	{
     	int max_nonzero_rows = 0;
     	for (int i = 0; i < rows_; i++)
     	{
@@ -155,16 +156,16 @@ public:
             	max_nonzero_cols++;
         	}
     	}
-	
-	    return std::max(max_nonzero_rows, max_nonzero_cols);
+
+	    return max(max_nonzero_rows, max_nonzero_cols);
 	}
-	
+
 	//metoda obliczajaca dopelnienie algebraiczne elementow macierzy wejsciowej
 	Matrix algebraic_complement() const
 	{
     if (rows_ != cols_)
     {
-        std::cout << "Matrix must be square to calculate algebraic complement." << '\n';
+        cout << "Matrix must be square to calculate algebraic complement." << '\n';
         return Matrix(0, 0);
     }
 
@@ -187,12 +188,12 @@ public:
                 submatrix_i++;
                 submatrix_j = 0;
             }
-            complement(i, j) = std::pow(-1, i + j) * submatrix.determinant();
+            complement(i, j) = pow(-1, i + j) * submatrix.determinant();
         }
     }
     return complement;
 	}
-	
+
 	Matrix operator*(const double &rhs) const {
     Matrix result(rows_, cols_);
     for (int i = 0; i < data_.size(); i++) {
@@ -200,38 +201,38 @@ public:
     }
     return result;
 	}
-	
+
 private:
     int rows_;
     int cols_;
-    std::vector<int> data_;
+    vector<int> data_;
 };
 
 int main()
 {
 	srand(time(0));
-	
-    std::cout << "Podaj liczbe wierszy macierzy: ";
-    int rows;
-    std::cin >> rows;
 
-    std::cout << "Podaj liczbe kolumn macierzy: ";
+    cout << "Podaj liczbe wierszy macierzy: ";
+    int rows;
+    cin >> rows;
+
+    cout << "Podaj liczbe kolumn macierzy: ";
     int cols;
-    std::cin >> cols;
+    cin >> cols;
 
     Matrix m(rows, cols);
-    
+
 	int choice;
-	std::cout<<"Podaj sposob wczytania danych do macierzy (1 - reczny, 2 - losowy)";
-	std::cin>>choice;
-	
+	cout<<"Podaj sposob wczytania danych do macierzy (1 - reczny, 2 - losowy)";
+	cin>>choice;
+
 	if (choice==1){
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
         {
-            std::cout << "Podaj element macierzy [" << i << "][" << j << "]: ";
-            std::cin >> m(i, j);
+            cout << "Podaj element macierzy [" << i << "][" << j << "]: ";
+            cin >> m(i, j);
         }
     }
 	}
@@ -241,49 +242,49 @@ int main()
     {
         for (int j = 0; j < cols; j++)
         {
-            //std::cout << "Podaj element macierzy [" << i << "][" << j << "]: ";
+            //cout << "Podaj element macierzy [" << i << "][" << j << "]: ";
             m(i, j)=rand()%10;
         }
     }
 	}
 	else
-	std::cout<<"Zly wybor!";
+	cout<<"Zly wybor!";
 
-    std::cout << "Macierz wejsciowa:" << '\n';
+    cout << "Macierz wejsciowa:" << '\n';
     m.print();
-	
-	std::cout << std::endl;
-	
+
+	cout << endl;
+
     Matrix m_transposed = m.transpose();
-    std::cout << "Macierz po transpozycji:" << '\n';
+    cout << "Macierz po transpozycji:" << '\n';
     m_transposed.print();
-    
-    std::cout << std::endl;
+
+    cout << endl;
     //Matrix m_reversed = m.reverse();
-    //std::cout << "Macierz po odwroceniu:" << '\n';
+    //cout << "Macierz po odwroceniu:" << '\n';
     //m_reversed.print();
-    
+
     double det = m.determinant();
-    //std::cout << std::fixed << std::setprecision(2);
-	std::cout << "Wyznacznik macierzy wejsciowej: " << det << '\n';
-	
-	std::cout << std::endl;
-	
+    //cout << std::fixed << std::setprecision(2);
+	cout << "Wyznacznik macierzy wejsciowej: " << det << '\n';
+
+	cout << endl;
+
 	int degree = m.degree();
-	std::cout << "Stopien macierzy wejsciowej: " << degree << '\n';
-	
-	std::cout << std::endl;
-	
+	cout << "Stopien macierzy wejsciowej: " << degree << '\n';
+
+	cout << endl;
+
 	Matrix m_algebraic_complement = m.algebraic_complement();
-	std::cout << "Macierz dopelnien algebraicznych macierzy wejsciowej:" << '\n';
+	cout << "Macierz dopelnien algebraicznych macierzy wejsciowej:" << '\n';
 	m_algebraic_complement.print();
-	
-	std::cout << std::endl;
-	
+
+	cout << endl;
+
 	//std::cout << std::fixed << std::setprecision(2);
 	Matrix m_reversed = m.reverse();
-    std::cout << "Macierz odwrotna (moga pojawic sie same 0 gdy wartosci sa bliskie zeru, gdyz to liczby calkowite)\n";
-	std::cout<<"Najlepiej sprawdzac recznie.\n";
+    cout << "Macierz odwrotna (moga pojawic sie same 0 gdy wartosci sa bliskie zeru, gdyz to liczby calkowite)\n";
+	cout<<"Najlepiej sprawdzac recznie.\n";
     m_reversed.print();
 
     return 0;
