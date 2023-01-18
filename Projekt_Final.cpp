@@ -4,6 +4,7 @@
 #include <iomanip>
 #include<stdlib.h>
 #include<time.h>
+#include <fstream>
 using namespace std;
 
 class Matrix
@@ -223,7 +224,7 @@ int main()
     Matrix m(rows, cols);
 
 	int choice;
-	cout<<"Podaj sposob wczytania danych do macierzy (1 - reczny, 2 - losowy)";
+	cout<<"Podaj sposob wczytania danych do macierzy (1 - reczny, 2 - losowy, 3 - z pliku): ";
 	cin>>choice;
 
 	if (choice==1){
@@ -247,8 +248,26 @@ int main()
         }
     }
 	}
+	else if (choice ==3)
+	{
+		string fileName;
+        cout << "Podaj nazwe pliku: ";
+        cin >> fileName;
+        ifstream file(fileName.c_str());
+	for (int i = 0; i < rows; i++)
+	{
+	for (int j = 0; j < cols; j++)
+	{
+	file >> m(i, j);
+	}
+	}
+	}
 	else
-	cout<<"Zly wybor!";
+	{
+		cout<<"Zly wybor!";
+		return 0;
+	}
+
 
     cout << "Macierz wejsciowa:" << '\n';
     m.print();
@@ -281,7 +300,7 @@ int main()
 
 	cout << endl;
 
-	//std::cout << std::fixed << std::setprecision(2);
+	//cout << fixed << setprecision(2);
 	Matrix m_reversed = m.reverse();
     cout << "Macierz odwrotna (moga pojawic sie same 0 gdy wartosci sa bliskie zeru, gdyz to liczby calkowite)\n";
 	cout<<"Najlepiej sprawdzac recznie.\n";
