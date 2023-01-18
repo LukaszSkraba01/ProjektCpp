@@ -166,7 +166,7 @@ public:
 	{
     if (rows_ != cols_)
     {
-        cout << "Matrix must be square to calculate algebraic complement." << '\n';
+        cout << "Macierz musi byc kwadratowa by obliczyc macierz dopelnien." << '\n';
         return Matrix(0, 0);
     }
 
@@ -194,6 +194,34 @@ public:
     }
     return complement;
 	}
+	
+	//dodawanie macierzy
+	Matrix operator+(const Matrix &m) const {
+        if (rows_ != m.rows_ || cols_ != m.cols_) {
+            throw "Rozmiary macierzy sie nie zgadzaja";
+        }
+        Matrix sum(rows_, cols_);
+        for (int i = 0; i < rows_; i++) {
+            for (int j = 0; j < cols_; j++) {
+                sum(i, j) = (*this)(i, j) + m(i, j);
+            }
+        }
+        return sum;
+    }
+    
+    //odejmowanie macierzy
+	Matrix operator-(const Matrix &m) const {
+        if (rows_ != m.rows_ || cols_ != m.cols_) {
+            throw "Rozmiary macierzy sie nie zgadzaja";
+        }
+        Matrix diff(rows_, cols_);
+		for (int i = 0; i < rows_; i++) {
+			for (int j = 0; j < cols_; j++) {
+				diff(i, j) = (*this)(i, j) - m(i, j);
+		}
+		}
+		return diff;
+    }
 
 	Matrix operator*(const double &rhs) const {
     Matrix result(rows_, cols_);
@@ -224,7 +252,7 @@ int main()
     Matrix m(rows, cols);
 
 	int choice;
-	cout<<"Podaj sposob wczytania danych do macierzy (1 - reczny, 2 - losowy, 3 - z pliku): ";
+	cout<<"Podaj sposob wczytania danych do macierzy (1 - reczny, 2 - losowy, 3 - z pliku)";
 	cin>>choice;
 
 	if (choice==1){
@@ -250,10 +278,10 @@ int main()
 	}
 	else if (choice ==3)
 	{
-		string fileName;
-        cout << "Podaj nazwe pliku: ";
-        cin >> fileName;
-        ifstream file(fileName.c_str());
+		std::string fileName;
+	std::cout << "Podaj nazwe pliku (matrix.txt): ";
+	std::cin >> fileName;
+	std::ifstream file(fileName.c_str());
 	for (int i = 0; i < rows; i++)
 	{
 	for (int j = 0; j < cols; j++)
@@ -264,11 +292,11 @@ int main()
 	}
 	else
 	{
-		cout<<"Zly wybor!";
+		cout<<"Zly wybor!";	
 		return 0;
 	}
-
-
+	
+	cout << endl;
     cout << "Macierz wejsciowa:" << '\n';
     m.print();
 
@@ -300,11 +328,37 @@ int main()
 
 	cout << endl;
 
-	//cout << fixed << setprecision(2);
+	//std::cout << std::fixed << std::setprecision(2);
 	Matrix m_reversed = m.reverse();
     cout << "Macierz odwrotna (moga pojawic sie same 0 gdy wartosci sa bliskie zeru, gdyz to liczby calkowite)\n";
 	cout<<"Najlepiej sprawdzac recznie.\n";
-    m_reversed.print();
+    m_reversed.print();	
+    
+    cout << endl;
+    
+    cout<<"Sumowanie i odejmowanie dwoch macierzy:\n";
+    cout << endl;
+    Matrix a(3,3);
+    Matrix b(3,3);
+    srand(time(NULL));
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            a(i, j) = rand() % 10;
+            b(i, j) = rand() % 10;
+        }
+    }
+    Matrix sum = a + b;
+    Matrix diff = a - b;
+    cout<<"Macierz a:"<<endl;
+    a.print();
+    cout<<"Macierz b:"<<endl;
+    b.print();
+    cout << endl;
+    cout<<"Macierz po zsumowaniu a + b:"<<endl;
+    sum.print();
+    cout << endl;
+	cout<<"Macierz po odjeciu a - b:"<<endl;
+	diff.print();	
 
     return 0;
 }

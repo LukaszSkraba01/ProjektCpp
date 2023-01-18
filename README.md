@@ -1,5 +1,23 @@
 # ProjektCpp - P4 | Łukasz Skraba i Adrian Ruchała |
 # Macierze | Programowanie Zaawansowane | 2022/3|
+
+Program dokonujący szeregu funkcji na macierzy wejściowej, takich jak:
+
+- transpozycja,
+- obliczanie wyznacznika macierzy,
+- stopien macierzy,
+- macierz dopelnien algebraicznych,
+- macierz odwrotna;
+- sumowanie i odejmowanie macierzy.
+
+Program pozwala na wczytanie macierzy wejsciowej na 3 sposoby:
+
+- recznie,
+- losowymi wartosciami,
+- z pliku o podanej przez użytkownika nazwie.
+
+Opisy niektórych funkcji:
+
 W podanym programie znajduje się konstruktor Matrix(int rows, int cols), który umożliwia utworzenie macierzy o podanych liczbie wierszy i kolumn. Konstruktor ten jest wywoływany w linii Matrix m(rows, cols), gdzie rows i cols to zmienne, które są wczytywane od użytkownika.
 
 Klasa Matrix pozwala na tworzenie obiektów przechowujących macierze. W podanym programie obiekt o nazwie m jest tworzony w linii Matrix m(rows, cols), gdzie rows i cols są zmiennymi, które są wczytywane od użytkownika. Obiekt ten przechowuje macierz o liczbie wierszy i kolumn określonej przez użytkownika.
