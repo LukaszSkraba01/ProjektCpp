@@ -162,21 +162,35 @@ public:
 	//metoda obliczajaca dopelnienie algebraiczne elementow macierzy wejsciowej
 	Matrix algebraic_complement() const
 	{
-    	if (rows_ != cols_)
-    	{
-        	std::cout << "Macierz musi byc kwadratowa, aby obliczyc dopelnienie algebraiczne." << '\n';
-        	return Matrix(0, 0);
-    	}
+    if (rows_ != cols_)
+    {
+        std::cout << "Matrix must be square to calculate algebraic complement." << '\n';
+        return Matrix(0, 0);
+    }
 
-    	Matrix complement(rows_, cols_);
-    	for (int i = 0; i < rows_; i++)
-    	{
-        	for (int j = 0; j < cols_; j++)
-        	{
-            	complement(i, j) = std::pow(-1, i + j) * (*this)(i, j);
-        	}
-    	}
-    		return complement;
+    Matrix complement(rows_, cols_);
+    for (int i = 0; i < rows_; i++)
+    {
+        for (int j = 0; j < cols_; j++)
+        {
+            int submatrix_i = 0, submatrix_j = 0;
+            Matrix submatrix(rows_ - 1, cols_ - 1);
+            for (int k = 0; k < rows_; k++)
+            {
+                if (k == i) continue;
+
+                for (int l = 0; l < cols_; l++)
+                {
+                    if (l == j) continue;
+                    submatrix(submatrix_i, submatrix_j++) = (*this)(k, l);
+                }
+                submatrix_i++;
+                submatrix_j = 0;
+            }
+            complement(i, j) = std::pow(-1, i + j) * submatrix.determinant();
+        }
+    }
+    return complement;
 	}
 	
 	Matrix operator*(const double &rhs) const {
